@@ -14,18 +14,22 @@ export default async (req, res) => {
     connectOption
   );
   const db = client.db(databaseConfig.DB_NAME);
-  const response = await db
-    .collection(databaseConfig.RESERVE_COLLECTION_NAME)
-    .insert({
-      id: 1,
-      reserved_at: req.body.reservedAt,
-      name: req.body.name,
-      email: req.body.email,
-      space_id: req.body.spaceId,
-      created_at: str_now,
-      updated_at: str_now
-    });
-  console.log(response);
+
+  const timeZoneRes = await db
+    .collection(databaseConfig.TIME_ZONE_COLLECTION_NAME)
+    .insert({ time_zone: req.body.timeZome });
+  const spaceRes = await db
+    .collection(databaseConfig.SPACE_COLLECTION_NAME)
+    .insert({ place: req.body.classroom, seat_id: req.body.seatId });
+  await db.collection(databaseConfig.RESERVE_COLLECTION_NAME).insert({
+    reserved_at: req.body.reservedAt,
+    name: req.body.name,
+    email: req.body.email,
+    time_zone_id: timeZoneRes.ops[0]._id,
+    space_id: spaceRes.ops[0]._id,
+    created_at: str_now,
+    updated_at: str_now
+  });
   client.close();
 
   res.end();
