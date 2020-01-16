@@ -1,6 +1,6 @@
 const apiConfig = {
   URI: {
-    RESERVE_URI: "http://localhost:8080/reserve"
+    REGISTER_RESERVE_URI: "/api/register-reserve"
   }
 };
 

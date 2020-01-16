@@ -23,7 +23,7 @@ const ReserveForm = () => {
 
   const insertReserve = () => {
     const body = {
-      date: dateFormater_YYMMDD({ date: appHandler.date }),
+      reservedAt: dateFormater_YYMMDD({ date: appHandler.date }),
       classroom: modalHandler.classroom,
       timeZome: modalHandler.timeZone,
       name: name,
@@ -31,20 +31,20 @@ const ReserveForm = () => {
     };
 
     axios
-      .post(apiConfig.URI.RESERVE_URI, body)
+      .post(apiConfig.URI.REGISTER_RESERVE_URI, body)
       .then(() => {
         alert("席の予約を行いました。");
       })
-      .catch(() => {
+      .catch(error => {
+        console.log(error);
         alert(`
         席の予約に失敗しました。
         お手数ですがしばらくしてから再度お試しください。`);
       });
   };
 
-  const reserve = () => {
-    insertReserve();
-    alert("予約しました");
+  const reserve = async () => {
+    await insertReserve();
     modalHandler.closeModal();
   };
 
