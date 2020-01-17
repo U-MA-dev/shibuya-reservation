@@ -17,7 +17,7 @@ export default async (req, res) => {
 
   const timeZoneRes = await db
     .collection(databaseConfig.TIME_ZONE_COLLECTION_NAME)
-    .insert({ time_zone: req.body.timeZome });
+    .insert({ time_zone: req.body.timeZone });
   const spaceRes = await db
     .collection(databaseConfig.SPACE_COLLECTION_NAME)
     .insert({ place: req.body.classroom, seat_id: req.body.seatId });

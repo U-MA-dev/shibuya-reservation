@@ -5,12 +5,14 @@ const classrooms = {
     {
       code: "shibuya",
       name: "渋谷",
-      orderedId: "1"
+      orderedId: "1",
+      seatNum: 7
     },
     {
       code: "nakano",
       name: "中野",
-      orderedId: "2"
+      orderedId: "2",
+      seatNum: 7
     }
   ]
 };

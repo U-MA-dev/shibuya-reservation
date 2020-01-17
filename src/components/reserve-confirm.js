@@ -64,7 +64,8 @@ const ReserveConfirm = () => {
           backgroundColor: "red"
         }}
       >
-        教室の予約状況
+        <div className="imageRegion">test</div>
+        <div className="reservedSeatRegion">教室の予約状況</div>
       </div>
       <div className="buttons">
         <Button variant="contained" onClick={modalHandler.closeModal}>
