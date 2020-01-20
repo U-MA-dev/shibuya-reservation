@@ -60,13 +60,18 @@ const convertObj = arr => {
   for (let a of arr) {
     const date = a.reserved_at;
     const place = a.space[0].place;
+    const time_zone = a.time_zone[0].time_zone;
     if (!obj[date]) {
-      obj[date] = { [place]: [a] };
+      obj[date] = { [place]: { [time_zone]: [a] } };
     } else {
       if (!obj[date][place]) {
-        obj[date][place] = [];
+        obj[date][place] = { [time_zone]: [a] };
+      } else {
+        if (!obj[date][place][time_zone]) {
+          obj[date][place][time_zone] = [];
+        }
+        obj[date][place][time_zone].push(a);
       }
-      obj[date][place].push(a);
     }
   }
 
