@@ -28,7 +28,8 @@ const ReserveCalendar = () => {
         key: fetchKey
       }
     });
-    console.log(response.data);
+
+    setReservedDate(response.data);
   };
 
   const openModal = () => {
@@ -96,12 +97,11 @@ const ReserveCalendar = () => {
     fetchData(value);
   };
   const onActiveDateChange = ({ activeStartDate }) => {
-    console.log(activeStartDate);
     fetchData(activeStartDate);
   };
 
   return (
-    <AppContext.Provider value={{ date, modalIsOpen, setIsOpen }}>
+    <AppContext.Provider value={{ date, modalIsOpen, setIsOpen, reservedData }}>
       <div>
         <Calendar
           locale="ja-JP"

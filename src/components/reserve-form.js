@@ -5,7 +5,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import TextField from "@material-ui/core/TextField";
 import axios from "axios";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import apiConfig from "./../common/api-config";
 import { dateFormater_display, dateFormater_YYMMDD } from "./../common/util";
 import classrooms from "./../constants/classrooms";
@@ -19,21 +19,6 @@ const ReserveForm = () => {
   const [seatId, setSeatId] = useState(0);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [placeInfo, setPlaceInfo] = useState({});
-  const [classificationInfo, setClassificationInfo] = useState({});
-
-  useEffect(() => {
-    for (let place of classrooms.places) {
-      if (place.code === modalHandler.classroom) {
-        setPlaceInfo(place);
-      }
-    }
-    for (let c of timeZones.classification) {
-      if (c.code === modalHandler.timeZone) {
-        setClassificationInfo(c);
-      }
-    }
-  }, []);
 
   const insertReserve = () => {
     const body = {
@@ -76,21 +61,21 @@ const ReserveForm = () => {
           />
         </div>
         <div className="classroomColumn">
-          {Object.keys(placeInfo).length && (
+          {Object.keys(modalHandler.placeInfo).length && (
             <TextField
               disabled
               label={classrooms.label}
-              value={placeInfo.name}
+              value={modalHandler.placeInfo.name}
               variant="filled"
             />
           )}
         </div>
         <div className="timeZoneColumn">
-          {Object.keys(classificationInfo).length && (
+          {Object.keys(modalHandler.classificationInfo).length && (
             <TextField
               disabled
               label={timeZones.label}
-              value={classificationInfo.name}
+              value={modalHandler.classificationInfo.name}
               variant="filled"
             />
           )}
@@ -119,7 +104,7 @@ const ReserveForm = () => {
               <MenuItem value={0}>
                 <em>選択してください</em>
               </MenuItem>
-              {[...Array(placeInfo.seatNum).keys()].map(si => {
+              {[...Array(modalHandler.placeInfo.seatNum).keys()].map(si => {
                 si += 1;
                 return (
                   <MenuItem key={si} value={si}>

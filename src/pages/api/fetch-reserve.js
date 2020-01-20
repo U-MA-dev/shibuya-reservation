@@ -61,16 +61,17 @@ const convertObj = arr => {
     const date = a.reserved_at;
     const place = a.space[0].place;
     const time_zone = a.time_zone[0].time_zone;
+    const seat_id = a.space[0].seat_id;
     if (!obj[date]) {
-      obj[date] = { [place]: { [time_zone]: [a] } };
+      obj[date] = { [place]: { [time_zone]: { [seat_id]: a } } };
     } else {
       if (!obj[date][place]) {
-        obj[date][place] = { [time_zone]: [a] };
+        obj[date][place] = { [time_zone]: { [seat_id]: a } };
       } else {
         if (!obj[date][place][time_zone]) {
-          obj[date][place][time_zone] = [];
+          obj[date][place][time_zone] = {};
         }
-        obj[date][place][time_zone].push(a);
+        obj[date][place][time_zone][seat_id] = a;
       }
     }
   }

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Modal from "react-modal";
 import classrooms from "./../constants/classrooms";
 import timeZones from "./../constants/time-zones";
@@ -13,6 +13,21 @@ const ReserveModal = () => {
   const [classroom, setClassroom] = useState(classrooms.places[0].code);
   const [timeZone, setTimeZone] = useState(timeZones.classification[0].code);
   const [isReserve, setIsReserve] = useState(false);
+  const [placeInfo, setPlaceInfo] = useState({});
+  const [classificationInfo, setClassificationInfo] = useState({});
+
+  useEffect(() => {
+    for (let place of classrooms.places) {
+      if (place.code === classroom) {
+        setPlaceInfo(place);
+      }
+    }
+    for (let c of timeZones.classification) {
+      if (c.code === timeZone) {
+        setClassificationInfo(c);
+      }
+    }
+  }, []);
 
   const closeModal = () => {
     appHandler.setIsOpen(false);
@@ -27,7 +42,9 @@ const ReserveModal = () => {
         timeZone,
         setTimeZone,
         setIsReserve,
-        closeModal
+        closeModal,
+        placeInfo,
+        classificationInfo
       }}
     >
       <div>

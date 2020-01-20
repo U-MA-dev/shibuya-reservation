@@ -10,10 +10,18 @@ import classrooms from "./../constants/classrooms";
 import timeZones from "./../constants/time-zones";
 import appContext from "./../contexts/app-context";
 import modalContext from "./../contexts/modal-context";
+import { dateFormater_YYMMDD } from "./../common/util";
 
 const ReserveConfirm = () => {
   const appHandler = useContext(appContext);
   const modalHandler = useContext(modalContext);
+
+  const dateData =
+    appHandler.reservedData[dateFormater_YYMMDD({ date: appHandler.date })];
+  const classroomData = dateData ? dateData[modalHandler.classroom] : null;
+  const timeZoneData = classroomData
+    ? classroomData[modalHandler.timeZone]
+    : null;
 
   return (
     <div>
@@ -56,16 +64,22 @@ const ReserveConfirm = () => {
           })}
         </Select>
       </FormControl>
-      <div
-        style={{
-          margin: "10px",
-          width: "90%",
-          height: "400px",
-          backgroundColor: "red"
-        }}
-      >
+      <div className="reserveRegion">
         <div className="imageRegion">test</div>
-        <div className="reservedSeatRegion">教室の予約状況</div>
+        <div className="reservedSeatRegion">
+          {[...Array(modalHandler.placeInfo.seatNum).keys()].map(si => {
+            si += 1;
+            if (timeZoneData && timeZoneData[si]) {
+              return (
+                <div key={si}>
+                  {si} : {timeZoneData[si].name}
+                </div>
+              );
+            } else {
+              return <div key={si}>{si} :</div>;
+            }
+          })}
+        </div>
       </div>
       <div className="buttons">
         <Button variant="contained" onClick={modalHandler.closeModal}>
