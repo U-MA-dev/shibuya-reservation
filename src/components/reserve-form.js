@@ -20,6 +20,13 @@ const ReserveForm = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
 
+  const dateData =
+    appHandler.reservedData[dateFormater_YYMMDD({ date: appHandler.date })];
+  const classroomData = dateData ? dateData[modalHandler.classroom] : null;
+  const timeZoneData = classroomData
+    ? classroomData[modalHandler.timeZone]
+    : null;
+
   const insertReserve = () => {
     const body = {
       reservedAt: dateFormater_YYMMDD({ date: appHandler.date }),
@@ -106,11 +113,13 @@ const ReserveForm = () => {
               </MenuItem>
               {[...Array(modalHandler.placeInfo.seatNum).keys()].map(si => {
                 si += 1;
-                return (
-                  <MenuItem key={si} value={si}>
-                    {si}
-                  </MenuItem>
-                );
+                if (!timeZoneData[si]) {
+                  return (
+                    <MenuItem key={si} value={si}>
+                      {si}
+                    </MenuItem>
+                  );
+                }
               })}
             </Select>
           </FormControl>
