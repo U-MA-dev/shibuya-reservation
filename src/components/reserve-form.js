@@ -87,16 +87,22 @@ const ReserveForm = () => {
             />
           )}
         </div>
-        <div
-          className="reservedCulumn"
-          style={{
-            margin: "10px",
-            width: "90%",
-            height: "400px",
-            backgroundColor: "red"
-          }}
-        >
-          教室の予約状況
+        <div className="reserveRegion">
+          <div className="imageRegion">test</div>
+          <div className="reservedSeatRegion">
+            {[...Array(modalHandler.placeInfo.seatNum).keys()].map(si => {
+              si += 1;
+              if (timeZoneData && timeZoneData[si]) {
+                return (
+                  <div key={si}>
+                    {si} : {timeZoneData[si].name}
+                  </div>
+                );
+              } else {
+                return <div key={si}>{si} :</div>;
+              }
+            })}
+          </div>
         </div>
         <div className="seatCulumn">
           <FormControl>
@@ -113,7 +119,7 @@ const ReserveForm = () => {
               </MenuItem>
               {[...Array(modalHandler.placeInfo.seatNum).keys()].map(si => {
                 si += 1;
-                if (!timeZoneData[si]) {
+                if (timeZoneData && !timeZoneData[si]) {
                   return (
                     <MenuItem key={si} value={si}>
                       {si}
