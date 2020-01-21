@@ -27,7 +27,7 @@ const ReserveModal = () => {
         setClassificationInfo(c);
       }
     }
-  }, []);
+  }, [classroom, timeZone]);
 
   const closeModal = () => {
     appHandler.setIsOpen(false);

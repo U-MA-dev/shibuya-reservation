@@ -1,5 +1,5 @@
-// import shibuya_room from "./../static/shibuya_room.png";
-// import nakano_room from "./../static/nakano_room.png";
+import nakano_room from "./../../public/nakano_room.png";
+import shibuya_room from "./../../public/shibuya_room.png";
 
 const classrooms = {
   class: "classroom",
@@ -9,15 +9,15 @@ const classrooms = {
       code: "shibuya",
       name: "渋谷",
       orderedId: "1",
-      seatNum: 7
-      // map: shibuya_room
+      seatNum: 7,
+      map_img: shibuya_room
     },
     {
       code: "nakano",
       name: "中野",
       orderedId: "2",
-      seatNum: 7
-      // map: nakano_room
+      seatNum: 7,
+      map_img: nakano_room
     }
   ]
 };

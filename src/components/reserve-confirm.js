@@ -24,75 +24,96 @@ const ReserveConfirm = () => {
     : null;
 
   return (
-    <div>
-      <h1>自習室予約確認</h1>
-      <div className="dateColumn">
-        <TextField
-          disabled
-          label="日程"
-          defaultValue={dateFormater_display({ date: appHandler.date })}
-          variant="filled"
-        />
-      </div>
-      <FormControl>
-        <InputLabel>{classrooms.label}</InputLabel>
-        <Select
-          value={modalHandler.classroom}
-          onChange={event => modalHandler.setClassroom(event.target.value)}
-        >
-          {classrooms.places.map(place => {
-            return (
-              <MenuItem key={place.code} value={place.code}>
-                {place.name}
-              </MenuItem>
-            );
-          })}
-        </Select>
-      </FormControl>
-      <FormControl>
-        <InputLabel>{timeZones.label}</InputLabel>
-        <Select
-          value={modalHandler.timeZone}
-          onChange={event => modalHandler.setTimeZone(event.target.value)}
-        >
-          {timeZones.classification.map(c => {
-            return (
-              <MenuItem key={c.code} value={c.code}>
-                {c.name}
-              </MenuItem>
-            );
-          })}
-        </Select>
-      </FormControl>
-      <div className="reserveRegion">
-        <div className="imageRegion">test</div>
-        <div className="reservedSeatRegion">
-          {[...Array(modalHandler.placeInfo.seatNum).keys()].map(si => {
-            si += 1;
-            if (timeZoneData && timeZoneData[si]) {
+    <>
+      <div>
+        <h1>自習室予約確認</h1>
+        <div className="dateColumn">
+          <TextField
+            disabled
+            label="日程"
+            defaultValue={dateFormater_display({ date: appHandler.date })}
+            variant="filled"
+          />
+        </div>
+        <FormControl>
+          <InputLabel>{classrooms.label}</InputLabel>
+          <Select
+            value={modalHandler.classroom}
+            onChange={event => modalHandler.setClassroom(event.target.value)}
+          >
+            {classrooms.places.map(place => {
               return (
-                <div key={si}>
-                  {si} : {timeZoneData[si].name}
-                </div>
+                <MenuItem key={place.code} value={place.code}>
+                  {place.name}
+                </MenuItem>
               );
-            } else {
-              return <div key={si}>{si} :</div>;
-            }
-          })}
+            })}
+          </Select>
+        </FormControl>
+        <FormControl>
+          <InputLabel>{timeZones.label}</InputLabel>
+          <Select
+            value={modalHandler.timeZone}
+            onChange={event => modalHandler.setTimeZone(event.target.value)}
+          >
+            {timeZones.classification.map(c => {
+              return (
+                <MenuItem key={c.code} value={c.code}>
+                  {c.name}
+                </MenuItem>
+              );
+            })}
+          </Select>
+        </FormControl>
+        <div className="reserveRegion">
+          <div className="imageRegion">
+            <img src={modalHandler.placeInfo.map_img} alt="" />
+          </div>
+          <div className="reservedSeatRegion">
+            {[...Array(modalHandler.placeInfo.seatNum).keys()].map(si => {
+              si += 1;
+              if (timeZoneData && timeZoneData[si]) {
+                return (
+                  <div key={si}>
+                    {si} : {timeZoneData[si].name}
+                  </div>
+                );
+              } else {
+                return <div key={si}>{si} :</div>;
+              }
+            })}
+          </div>
+        </div>
+        <div className="buttons">
+          <Button variant="contained" onClick={modalHandler.closeModal}>
+            戻る
+          </Button>
+          <Button
+            variant="contained"
+            onClick={() => modalHandler.setIsReserve(true)}
+          >
+            席予約
+          </Button>
         </div>
       </div>
-      <div className="buttons">
-        <Button variant="contained" onClick={modalHandler.closeModal}>
-          戻る
-        </Button>
-        <Button
-          variant="contained"
-          onClick={() => modalHandler.setIsReserve(true)}
-        >
-          席予約
-        </Button>
-      </div>
-    </div>
+      <style jsx>{`
+        .reserveRegion {
+          width: 100%;
+        }
+        .imageRegion {
+          float: left;
+        }
+        .imageRegion img {
+          display: inline-block;
+          max-height: 400px;
+        }
+        .reservedSeatRegion {
+        }
+        .buttons {
+          clear: left;
+        }
+      `}</style>
+    </>
   );
 };
 
