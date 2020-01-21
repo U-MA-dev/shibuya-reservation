@@ -19,6 +19,7 @@ const ReserveForm = () => {
   const [seatId, setSeatId] = useState(0);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [isChecked, setIsChecked] = useState(false);
 
   const dateData =
     appHandler.reservedData[dateFormater_YYMMDD({ date: appHandler.date })];
@@ -53,6 +54,21 @@ const ReserveForm = () => {
   const reserve = async () => {
     await insertReserve();
     modalHandler.closeModal();
+  };
+
+  const validate = () => {
+    let isValid = true;
+    if (!seatId) {
+      isValid = false;
+    }
+    if (!name) {
+      isValid = false;
+    }
+    if (!email) {
+      isValid = false;
+    }
+
+    return isValid;
   };
 
   return (
@@ -132,6 +148,9 @@ const ReserveForm = () => {
                 })}
               </Select>
             </FormControl>
+            {isChecked && !seatId && (
+              <div className="caution">席IDは必須入力項目です。</div>
+            )}
           </div>
           <div className="nameColumn">
             <TextField
@@ -143,6 +162,9 @@ const ReserveForm = () => {
                 setName(event.target.value);
               }}
             />
+            {isChecked && !name && (
+              <div className="caution">名前は必須入力項目です。</div>
+            )}
           </div>
           <div className="emailColumn">
             <TextField
@@ -154,6 +176,9 @@ const ReserveForm = () => {
                 setEmail(event.target.value);
               }}
             />
+            {isChecked && !email && (
+              <div className="caution">メールアドレスは必須入力項目です。</div>
+            )}
           </div>
         </div>
         <div className="buttons">
@@ -163,7 +188,16 @@ const ReserveForm = () => {
           >
             戻る
           </Button>
-          <Button variant="contained" onClick={reserve}>
+          <Button
+            variant="contained"
+            onClick={() => {
+              const isValid = validate();
+              if (isValid) {
+                reserve();
+              }
+              setIsChecked(true);
+            }}
+          >
             予約確定
           </Button>
         </div>
@@ -183,6 +217,9 @@ const ReserveForm = () => {
         }
         .buttons {
           clear: left;
+        }
+        .caution {
+          color: red;
         }
       `}</style>
     </>
