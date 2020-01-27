@@ -44,7 +44,7 @@ const ReserveCalendar = () => {
     return (
       <>
         <div className="reserveButton" variant="contained">
-          <div calssName="buttonContents">
+          <div className="buttonContents">
             {classrooms.places.map(place => {
               return (
                 <div key={place.code}>
