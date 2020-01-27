@@ -34,26 +34,91 @@ const ReserveModal = () => {
     setIsReserve(false);
   };
 
+  const customStyles = {
+    content: {
+      maxHeight: "90%",
+      maxWidth: "90%",
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      transform: "translate(-50%, -50%)",
+      padding: 0
+    }
+  };
+
   return (
-    <ModalContext.Provider
-      value={{
-        classroom,
-        setClassroom,
-        timeZone,
-        setTimeZone,
-        setIsReserve,
-        closeModal,
-        placeInfo,
-        classificationInfo
-      }}
-    >
-      <div>
-        <Modal isOpen={appHandler.modalIsOpen} onRequestClose={closeModal}>
-          {!isReserve && <ReserveConfirm />}
-          {isReserve && <ReserveForm />}
-        </Modal>
-      </div>
-    </ModalContext.Provider>
+    <>
+      <ModalContext.Provider
+        value={{
+          classroom,
+          setClassroom,
+          timeZone,
+          setTimeZone,
+          setIsReserve,
+          closeModal,
+          placeInfo,
+          classificationInfo
+        }}
+      >
+        <div>
+          <Modal
+            style={customStyles}
+            isOpen={appHandler.modalIsOpen}
+            onRequestClose={closeModal}
+          >
+            {!isReserve && <ReserveConfirm />}
+            {isReserve && <ReserveForm />}
+          </Modal>
+        </div>
+      </ModalContext.Provider>
+      <style>
+        {`
+          .modalContents {
+            padding: 16px;
+          }
+          .modalHeader {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-top: 8px;
+            padding-bottom: 8px;
+            font-weight: bold;
+            font-weight: 20px;
+            border-bottom: solid 1px #0000ff;
+          }
+          .modalBody{
+            padding-top: 8px;
+            padding-bottom: 8px;
+          }
+          .region{
+            padding-top: 8px;
+            padding-bottom: 8px;
+          }
+          .dateRegion{
+            width: 100%;
+          }
+          .classroomRegion{
+            width: 50%;
+          }
+          .timeZoneRegion{
+            width: 50%;
+          }
+          .region img {
+            display: inline-block;
+            max-width: 260px;
+          }
+          .caution {
+            color: red;
+          }
+          .buttons{
+            display: flex;
+            justify-content: space-between;
+            padding-top: 8px;
+          }
+        `}
+      </style>
+    </>
   );
 };
 

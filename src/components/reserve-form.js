@@ -73,112 +73,116 @@ const ReserveForm = () => {
 
   return (
     <>
-      <div>
-        <h1>自習室予約フォーム</h1>
-        <div className="reserveForm">
-          <div className="dateColumn">
-            <TextField
-              disabled
-              label="日程"
-              value={dateFormater_display({ date: appHandler.date })}
-              variant="filled"
-            />
-          </div>
-          <div className="classroomColumn">
-            {Object.keys(modalHandler.placeInfo).length && (
+      <div className="modalContents">
+        <div className="modalHeader">自習室予約フォーム</div>
+        <div className="modalBody">
+          <div className="reserveForm">
+            <div className="region dateRegion">
               <TextField
                 disabled
-                label={classrooms.label}
-                value={modalHandler.placeInfo.name}
+                label="日程"
+                value={dateFormater_display({ date: appHandler.date })}
                 variant="filled"
               />
-            )}
-          </div>
-          <div className="timeZoneColumn">
-            {Object.keys(modalHandler.classificationInfo).length && (
-              <TextField
-                disabled
-                label={timeZones.label}
-                value={modalHandler.classificationInfo.name}
-                variant="filled"
-              />
-            )}
-          </div>
-          <div className="reserveRegion">
-            <div className="imageRegion">
-              <img src={modalHandler.placeInfo.map_img} alt="" />
             </div>
-            <div className="reservedSeatRegion">
-              {[...Array(modalHandler.placeInfo.seatNum).keys()].map(si => {
-                si += 1;
-                if (timeZoneData && timeZoneData[si]) {
-                  return (
-                    <div key={si}>
-                      {si} : {timeZoneData[si].name}
-                    </div>
-                  );
-                } else {
-                  return <div key={si}>{si} :</div>;
-                }
-              })}
+            <div className="region classroomRegion">
+              {Object.keys(modalHandler.placeInfo).length && (
+                <TextField
+                  disabled
+                  label={classrooms.label}
+                  value={modalHandler.placeInfo.name}
+                  variant="filled"
+                />
+              )}
             </div>
-          </div>
-          <div className="seatCulumn">
-            <FormControl>
-              <InputLabel>席ID</InputLabel>
-              <Select
-                value={seatId}
-                onChange={event => {
-                  event.persist();
-                  setSeatId(event.target.value);
-                }}
-              >
-                <MenuItem value={0}>
-                  <em>選択してください</em>
-                </MenuItem>
+            <div className="region timeZoneRegion">
+              {Object.keys(modalHandler.classificationInfo).length && (
+                <TextField
+                  disabled
+                  label={timeZones.label}
+                  value={modalHandler.classificationInfo.name}
+                  variant="filled"
+                />
+              )}
+            </div>
+            <div className="reserveRegion">
+              <div className="region imageRegion">
+                <img src={modalHandler.placeInfo.map_img} alt="" />
+              </div>
+              <div className="region reservedSeatRegion">
                 {[...Array(modalHandler.placeInfo.seatNum).keys()].map(si => {
                   si += 1;
-                  if (!timeZoneData || !timeZoneData[si]) {
+                  if (timeZoneData && timeZoneData[si]) {
                     return (
-                      <MenuItem key={si} value={si}>
-                        {si}
-                      </MenuItem>
+                      <div key={si}>
+                        {si} : {timeZoneData[si].name}
+                      </div>
                     );
+                  } else {
+                    return <div key={si}>{si} :</div>;
                   }
                 })}
-              </Select>
-            </FormControl>
-            {isChecked && !seatId && (
-              <div className="caution">席IDは必須入力項目です。</div>
-            )}
-          </div>
-          <div className="nameColumn">
-            <TextField
-              required={true}
-              label="名前"
-              value={name}
-              onChange={event => {
-                event.persist();
-                setName(event.target.value);
-              }}
-            />
-            {isChecked && !name && (
-              <div className="caution">名前は必須入力項目です。</div>
-            )}
-          </div>
-          <div className="emailColumn">
-            <TextField
-              required={true}
-              label="メールアドレス"
-              value={email}
-              onChange={event => {
-                event.persist();
-                setEmail(event.target.value);
-              }}
-            />
-            {isChecked && !email && (
-              <div className="caution">メールアドレスは必須入力項目です。</div>
-            )}
+              </div>
+            </div>
+            <div className="region seatRegion">
+              <FormControl>
+                <InputLabel>席ID</InputLabel>
+                <Select
+                  value={seatId}
+                  onChange={event => {
+                    event.persist();
+                    setSeatId(event.target.value);
+                  }}
+                >
+                  <MenuItem value={0}>
+                    <em>選択してください</em>
+                  </MenuItem>
+                  {[...Array(modalHandler.placeInfo.seatNum).keys()].map(si => {
+                    si += 1;
+                    if (!timeZoneData || !timeZoneData[si]) {
+                      return (
+                        <MenuItem key={si} value={si}>
+                          {si}
+                        </MenuItem>
+                      );
+                    }
+                  })}
+                </Select>
+              </FormControl>
+              {isChecked && !seatId && (
+                <div className="caution">席IDは必須入力項目です。</div>
+              )}
+            </div>
+            <div className="region nameRegion">
+              <TextField
+                required={true}
+                label="名前"
+                value={name}
+                onChange={event => {
+                  event.persist();
+                  setName(event.target.value);
+                }}
+              />
+              {isChecked && !name && (
+                <div className="caution">名前は必須入力項目です。</div>
+              )}
+            </div>
+            <div className="region emailRegion">
+              <TextField
+                required={true}
+                label="メールアドレス"
+                value={email}
+                onChange={event => {
+                  event.persist();
+                  setEmail(event.target.value);
+                }}
+              />
+              {isChecked && !email && (
+                <div className="caution">
+                  メールアドレスは必須入力項目です。
+                </div>
+              )}
+            </div>
           </div>
         </div>
         <div className="buttons">
@@ -190,6 +194,7 @@ const ReserveForm = () => {
           </Button>
           <Button
             variant="contained"
+            color="primary"
             onClick={() => {
               const isValid = validate();
               if (isValid) {
@@ -202,26 +207,6 @@ const ReserveForm = () => {
           </Button>
         </div>
       </div>
-      <style jsx>{`
-        .reserveRegion {
-          width: 100%;
-        }
-        .imageRegion {
-          float: left;
-        }
-        .imageRegion img {
-          display: inline-block;
-          max-height: 400px;
-        }
-        .reservedSeatRegion {
-        }
-        .buttons {
-          clear: left;
-        }
-        .caution {
-          color: red;
-        }
-      `}</style>
     </>
   );
 };

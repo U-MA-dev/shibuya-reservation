@@ -44,7 +44,7 @@ const ReserveCalendar = () => {
     return (
       <>
         <div className="reserveButton" variant="contained">
-          <div>
+          <div calssName="buttonContents">
             {classrooms.places.map(place => {
               return (
                 <div key={place.code}>
@@ -114,11 +114,11 @@ const ReserveCalendar = () => {
           onActiveDateChange={onActiveDateChange}
         />
       </div>
-      <ReserveModal />
+      <ReserveModal className="modal" />
       <style>
         {`
         .react-calendar {
-          width: 100%;
+          min-width: 100%;
         }
         .react-calendar__tile{
           height: 100px;
